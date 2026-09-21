@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { CS_isSimulationActive } from "@/lib/CS_constants";
+import { CS_isSimulationActive, CS_TICK_INTERVAL_MS } from "@/lib/CS_constants";
 import {
   CS_createInitialStats,
   CS_tickStats,
@@ -26,9 +26,6 @@ type CS_StatsContextValue = {
 };
 
 const CS_StatsContext = createContext<CS_StatsContextValue | null>(null);
-
-/** Intervalo fijo entre actualizaciones de métricas (2 min). */
-const CS_TICK_INTERVAL_MS = 120_000;
 
 function nextDelayMs(_momentum: number): number {
   return CS_TICK_INTERVAL_MS;

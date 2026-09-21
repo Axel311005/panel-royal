@@ -25,6 +25,19 @@ export const CS_SIMULATION_TIMEZONE = "America/Managua";
 export const CS_SIMULATION_START_HOUR = 20;
 export const CS_SIMULATION_START_MINUTE = 25;
 
+/** Demo: ignora la hora de inicio y corre la simulación al cargar. */
+export const CS_SIMULATION_DEMO_ALWAYS_ON = false;
+
+/** Intervalo entre ticks de métricas (ms). */
+export const CS_TICK_INTERVAL_MS = 5_000;
+
+/** Tiempo medio entre pedidos (~1 min 50 s, un poco menos de 2 min). */
+export const CS_ORDER_MEAN_INTERVAL_MS = 110_000;
+
+/** Probabilidad de 1 pedido por tick (intervalo geométrico ≈ media deseada). */
+export const CS_ORDER_PROB_PER_TICK =
+  CS_TICK_INTERVAL_MS / CS_ORDER_MEAN_INTERVAL_MS;
+
 export function CS_getManaguaTimeParts(date: Date = new Date()) {
   const formatted = new Intl.DateTimeFormat("en-GB", {
     timeZone: CS_SIMULATION_TIMEZONE,
@@ -37,6 +50,7 @@ export function CS_getManaguaTimeParts(date: Date = new Date()) {
 }
 
 export function CS_isSimulationActive(date: Date = new Date()): boolean {
+  if (CS_SIMULATION_DEMO_ALWAYS_ON) return true;
   const { hour, minute } = CS_getManaguaTimeParts(date);
   const nowMinutes = hour * 60 + minute;
   const startMinutes =

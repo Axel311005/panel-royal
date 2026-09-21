@@ -1,6 +1,7 @@
 import {
   CS_BASELINE,
   CS_INITIAL_HOUR,
+  CS_ORDER_PROB_PER_TICK,
   CS_PRODUCT_PRICE_USD,
 } from "./CS_constants";
 
@@ -239,7 +240,6 @@ export function CS_tickStats(prev: CS_StatsState): CS_StatsState {
 
   const cartRate = 0.38 + momentum * 0.12 + Math.random() * 0.08;
   const checkoutRate = 0.72 + Math.random() * 0.12;
-  const baseCompleteRate = 0.07 + momentum * 0.08 + orders * 0.006;
   let royalCrownUnitsSold = prev.royalCrownUnitsSold;
   const referralChannelSales = { ...prev.referralChannelSales };
   const socialSources = prev.socialSources.map((s) => ({ ...s }));
@@ -276,21 +276,15 @@ export function CS_tickStats(prev: CS_StatsState): CS_StatsState {
       addedToCart += 1;
       if (Math.random() < checkoutRate) {
         reachedCheckout += 1;
-        if (Math.random() < baseCompleteRate) {
-          CS_registerOrder();
-        }
       }
     }
   }
 
-  let checkoutBacklog = reachedCheckout - completed;
-  const backlogOrderChance = Math.min(
-    0.38,
-    0.05 + momentum * 0.06 + checkoutBacklog * 0.004
-  );
-  if (checkoutBacklog > 0 && Math.random() < backlogOrderChance) {
+  if (Math.random() < CS_ORDER_PROB_PER_TICK) {
+    if (reachedCheckout <= completed) {
+      reachedCheckout += 1;
+    }
     CS_registerOrder();
-    checkoutBacklog -= 1;
   }
 
   const pendingFulfillment = orders - fulfilledOrders;
