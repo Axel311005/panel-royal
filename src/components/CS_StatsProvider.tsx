@@ -60,7 +60,9 @@ export function CS_StatsProvider({ children }: { children: React.ReactNode }) {
       setNotificationCount((n) => n + newOrders);
       setOrderAlertTick((t) => t + newOrders);
       for (let i = 0; i < newOrders; i++) {
-        window.setTimeout(() => CS_playNewOrderSound(), i * 900);
+        window.setTimeout(() => {
+          void CS_playNewOrderSound();
+        }, i * 900);
       }
     }
     prevOrdersRef.current = stats.orders;

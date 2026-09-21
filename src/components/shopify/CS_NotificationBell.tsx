@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useCS_Stats } from "@/components/CS_StatsProvider";
+import { CS_unlockOrderAudio } from "@/lib/CS_orderSound";
 
 export function CS_NotificationBell() {
   const { notificationCount, orderAlertTick } = useCS_Stats();
@@ -17,6 +18,9 @@ export function CS_NotificationBell() {
   return (
     <button
       type="button"
+      onClick={() => {
+        void CS_unlockOrderAudio();
+      }}
       className={`relative flex h-9 w-9 items-center justify-center rounded-lg hover:bg-white/10 ${
         ringing ? "cs-bell-alarm-glow" : ""
       }`}

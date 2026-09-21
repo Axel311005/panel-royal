@@ -125,14 +125,20 @@ export function CS_ShopifyShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const unlock = () => {
-      CS_unlockOrderAudio();
-      window.removeEventListener("pointerdown", unlock);
-      window.removeEventListener("keydown", unlock);
+      void CS_unlockOrderAudio().then((ready) => {
+        if (ready) {
+          window.removeEventListener("pointerdown", unlock);
+          window.removeEventListener("keydown", unlock);
+          window.removeEventListener("touchstart", unlock);
+        }
+      });
     };
-    window.addEventListener("pointerdown", unlock);
+    window.addEventListener("pointerdown", unlock, { passive: true });
+    window.addEventListener("touchstart", unlock, { passive: true });
     window.addEventListener("keydown", unlock);
     return () => {
       window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("touchstart", unlock);
       window.removeEventListener("keydown", unlock);
     };
   }, []);

@@ -15,12 +15,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Royal Boss Nicaragua · Informes",
   description: "Panel de informes y estadísticas",
+  icons: {
+    icon: [{ url: "/cs-royal-boss-logo.jpg", type: "image/jpeg" }],
+    shortcut: "/cs-royal-boss-logo.jpg",
+    apple: "/cs-royal-boss-logo.jpg",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
