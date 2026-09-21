@@ -1,6 +1,7 @@
 "use client";
 
 import { useCS_Stats } from "@/components/CS_StatsProvider";
+import { CS_formatSimulationStartLabel } from "@/lib/CS_constants";
 import { CS_BASELINE } from "@/lib/CS_simulation";
 import {
   CS_formatCompactGrowth,
@@ -30,7 +31,7 @@ function CS_UpdatedLabel({ date }: { date: Date }) {
 }
 
 export function CS_AnalyticsDashboard() {
-  const { stats } = useCS_Stats();
+  const { stats, simulationActive } = useCS_Stats();
 
   const sessionGrowth = CS_formatCompactGrowth(stats.sessions, CS_BASELINE.sessions);
   const cartPct = stats.sessions > 0 ? (stats.addedToCart / stats.sessions) * 100 : 0;
@@ -65,6 +66,12 @@ export function CS_AnalyticsDashboard() {
             <h1 className="text-[20px] font-semibold">Informes y estadísticas</h1>
             <CS_UpdatedLabel date={stats.lastUpdated} />
           </div>
+          {!simulationActive ? (
+            <p className="mt-2 rounded-lg border border-[#ffc96b] bg-[#fff5e6] px-3 py-2 text-[13px] text-[#6d4c00]">
+              Las métricas en vivo comienzan a las{" "}
+              <strong>{CS_formatSimulationStartLabel()}</strong> (hora Nicaragua).
+            </p>
+          ) : null}
           <div className="mt-3 flex flex-wrap gap-2">
             {["Hoy", "Comparación", "$ USD $"].map((chip, i) => (
               <button

@@ -17,3 +17,98 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
+
+@keyframes cs-bell-ring-alarm {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  8% {
+    transform: rotate(-22deg) scale(1.12);
+  }
+  16% {
+    transform: rotate(20deg) scale(1.08);
+  }
+  24% {
+    transform: rotate(-18deg) scale(1.12);
+  }
+  32% {
+    transform: rotate(16deg) scale(1.06);
+  }
+  40% {
+    transform: rotate(-14deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(12deg) scale(1.05);
+  }
+  60% {
+    transform: rotate(-10deg) scale(1.08);
+  }
+  70% {
+    transform: rotate(8deg) scale(1.04);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes cs-badge-pop {
+  0% {
+    transform: scale(0.5);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-badge-alarm {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.9);
+  }
+  25% {
+    transform: scale(1.35);
+    box-shadow: 0 0 18px rgba(255, 60, 60, 1);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 14px rgba(255, 0, 0, 0.95);
+  }
+  75% {
+    transform: scale(1.3);
+    box-shadow: 0 0 20px rgba(255, 80, 80, 1);
+  }
+}
+
+@keyframes cs-bell-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(255, 0, 0, 0);
+  }
+  30% {
+    box-shadow: 0 0 22px rgba(255, 40, 40, 0.85);
+  }
+  60% {
+    box-shadow: 0 0 14px rgba(255, 0, 0, 0.55);
+  }
+}
+
+.cs-bell-ring-alarm {
+  animation: cs-bell-ring-alarm 0.85s ease-in-out 2;
+}
+
+.cs-badge-pop {
+  animation: cs-badge-pop 0.35s ease-out;
+}
+
+.cs-badge-alarm {
+  animation: cs-badge-alarm 0.45s ease-in-out 3;
+}
+
+.cs-bell-alarm-glow {
+  animation: cs-bell-glow 0.5s ease-in-out 2;
+  background-color: rgba(255, 0, 0, 0.12);
+}

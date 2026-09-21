@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import { useCS_Stats } from "@/components/CS_StatsProvider";
 import { CS_STORE_NAME } from "@/lib/CS_constants";
-import { CS_ChevronRight, CS_NavIcon, CS_ShopifyLogo } from "./CS_Icons";
+import { CS_unlockOrderAudio } from "@/lib/CS_orderSound";
+import { CS_ChevronRight, CS_NavIcon } from "./CS_Icons";
+import { CS_NotificationBell } from "./CS_NotificationBell";
+import { CS_StoreLogo } from "./CS_StoreLogo";
 
 type CS_NavChild = { label: string; href?: string };
 
@@ -119,11 +123,25 @@ export function CS_ShopifyShell({ children }: { children: React.ReactNode }) {
   const ordersBadge =
     stats.orders > 0 ? String(stats.orders) : "1";
 
+  useEffect(() => {
+    const unlock = () => {
+      CS_unlockOrderAudio();
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+    window.addEventListener("pointerdown", unlock);
+    window.addEventListener("keydown", unlock);
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+  }, []);
+
   return (
     <div className="flex min-h-screen bg-[#f1f1f1] text-[#303030]">
       <aside className="flex w-[240px] shrink-0 flex-col bg-[#ebebeb]">
         <div className="px-3 pb-2 pt-3">
-          <CS_ShopifyLogo />
+          <CS_StoreLogo size={40} />
         </div>
 
         <nav className="flex-1 space-y-0.5 px-2 pb-3">
@@ -176,16 +194,18 @@ export function CS_ShopifyShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <span className="relative">
-              🔔
-              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px]">
-                7
-              </span>
-            </span>
-            <span className="flex items-center gap-2 rounded-full bg-[#008060] px-2 py-1 text-xs font-medium">
-              <span className="h-5 w-5 rounded-full bg-white/20" />
-              {CS_STORE_NAME}
-            </span>
+            <CS_NotificationBell />
+            <div className="flex max-w-[220px] items-center gap-2 rounded-lg bg-[#303030] py-1 pl-1 pr-2 text-xs font-medium text-white ring-1 ring-white/10">
+              <CS_StoreLogo size={26} className="shrink-0 rounded-[6px]" />
+              <span className="min-w-0 flex-1 truncate">{CS_STORE_NAME}</span>
+              <button
+                type="button"
+                className="shrink-0 rounded p-0.5 text-[14px] leading-none text-white/60 hover:text-white"
+                aria-label="Cerrar"
+              >
+                ×
+              </button>
+            </div>
           </div>
         </header>
         <main className="flex-1 overflow-auto">{children}</main>
