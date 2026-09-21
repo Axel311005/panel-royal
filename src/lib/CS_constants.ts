@@ -23,7 +23,7 @@ export const CS_INITIAL_HOUR = new Date().getHours();
 /** Inicio del incremento en vivo (hora Nicaragua / America/Managua) */
 export const CS_SIMULATION_TIMEZONE = "America/Managua";
 export const CS_SIMULATION_START_HOUR = 20;
-export const CS_SIMULATION_START_MINUTE = 15;
+export const CS_SIMULATION_START_MINUTE = 25;
 
 export function CS_getManaguaTimeParts(date: Date = new Date()) {
   const formatted = new Intl.DateTimeFormat("en-GB", {

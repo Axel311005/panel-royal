@@ -27,8 +27,8 @@ type CS_StatsContextValue = {
 
 const CS_StatsContext = createContext<CS_StatsContextValue | null>(null);
 
-/** Intervalo fijo entre actualizaciones de métricas (15 s). */
-const CS_TICK_INTERVAL_MS = 15_000;
+/** Intervalo fijo entre actualizaciones de métricas (2 min). */
+const CS_TICK_INTERVAL_MS = 120_000;
 
 function nextDelayMs(_momentum: number): number {
   return CS_TICK_INTERVAL_MS;
