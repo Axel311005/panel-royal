@@ -16,9 +16,12 @@ export const metadata: Metadata = {
   title: "Royal Boss Nicaragua · Informes",
   description: "Panel de informes y estadísticas",
   icons: {
-    icon: [{ url: "/cs-royal-boss-logo.jpg", type: "image/jpeg" }],
-    shortcut: "/cs-royal-boss-logo.jpg",
-    apple: "/cs-royal-boss-logo.jpg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
   },
 };
 
